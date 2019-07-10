@@ -3,7 +3,7 @@
 from __future__ import division
 import math
 import warnings
-from .exceptions import DesignFactorWarning, DataError
+from .exceptions import DesignFactorWarning, DataError, SamplingFractionWarning
 
 
 def approximate_sum(*pairs):
@@ -60,7 +60,7 @@ def approximate_sum(*pairs):
     return total, margin_of_error
 
 
-def approximate_median(range_list, design_factor=None):
+def approximate_median(range_list, design_factor=None, sampling_fraction=None):
     """
     Estimate a median and approximate the margin of error.
 
@@ -153,8 +153,14 @@ def approximate_median(range_list, design_factor=None):
         warnings.warn("", DesignFactorWarning)
         return estimated_median, None
 
+    # If there's no sampling fraction, we can't calculate a margin of error
+    if not sampling_fraction:
+        # Let's throw a warning, but still return the median
+        warnings.warn("", SamplingFractionWarning)
+        return estimated_median, None
+
     # Get the standard error for this dataset
-    standard_error = (design_factor * math.sqrt((99 / n) * (50**2))) / 100
+    standard_error = (design_factor * math.sqrt(((100 - sampling_fraction) / (n * sampling_fraction)) * (50**2))) / 100
 
     # Use the standard error to calculate the p values
     p_lower = (.5 - standard_error)
