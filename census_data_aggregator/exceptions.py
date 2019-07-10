@@ -20,9 +20,9 @@ Design factors for different census surveys and tables can be found in the "PUMS
 """
 
 
-class SamplingFractionWarning(Warning):
+class SamplingPercentageWarning(Warning):
     """
     Warns that you have not provided a design factor.
     """
     def __str__(self):
-        return """A margin of error cannot be calculated unless you provide a sampling fraction."""
+        return """A margin of error cannot be calculated unless you provide a sampling percentage."""

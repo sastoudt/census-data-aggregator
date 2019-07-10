@@ -111,14 +111,14 @@ The minimum value in the first range and the maximum value in the last range can
       dict(min=200000, max=250001, n=18)
   ]
 
-For a margin of error to be returned, a "design factor" must be provided to calculate the standard error. The statistical input is used to tailor the estimate to the variance of the dataset. The Census Bureau publishes design factors as part of its PUMS Accuracy statement. Find the value for the dataset you are estimating by referring to `the bureau's reference material <https://www.census.gov/programs-surveys/acs/technical-documentation/pums/documentation.html>`_.
+For a margin of error to be returned, a "design factor" and sampling percentage must be provided to calculate the standard error. These statistical inputs are used to tailor the estimate to the variance of the dataset and correct for a finite sample. The Census Bureau publishes design factors as part of its PUMS Accuracy statement. Find the value for the dataset you are estimating by referring to `the bureau's reference material <https://www.census.gov/programs-surveys/acs/technical-documentation/pums/documentation.html>`_.
 
 .. code-block:: python
 
-  >>> census_data_aggregator.approximate_median(income, design_factor=1.5)
+  >>> census_data_aggregator.approximate_median(income, design_factor=1.5, sampling_percentage=1)
   42211.096153846156, 27260.315546093672
 
-If a design factor is not provided, no margin of error will be returned.
+If a design factor and/or sampling percentage is not provided, no margin of error will be returned.
 
 .. code-block:: python
 
